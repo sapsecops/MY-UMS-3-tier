@@ -1,9 +1,0 @@
-<h2>Add Employee</h2>
-<form (ngSubmit)="addEmployee()">
-  <label>Name:</label><input [(ngModel)]="employee.name" required><br>
-  <label>Email:</label><input [(ngModel)]="employee.email" required><br>
-  <label>Designation:</label><input [(ngModel)]="employee.designation" required><br>
-  <label>Salary:</label><input [(ngModel)]="employee.salary" type="number" required><br>
-  <button type="submit">Save</button>
-</form>
-<button routerLink="/">Back</button>
