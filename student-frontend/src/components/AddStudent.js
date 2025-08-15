@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { BACKEND_URL } from '../config';
 
 function AddStudent({ onBack }) {
   const [name, setName] = useState('');
@@ -11,7 +10,7 @@ function AddStudent({ onBack }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const student = { name, email, course, amount, feesStatus };
-    await fetch(`${BACKEND_URL}/students`, {
+    await fetch('/api/students', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(student),

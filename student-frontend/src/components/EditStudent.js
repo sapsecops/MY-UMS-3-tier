@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { BACKEND_URL } from '../config';
 
 function EditStudent({ student, onUpdate }) {
   const [name, setName] = useState(student.name);
@@ -11,7 +10,7 @@ function EditStudent({ student, onUpdate }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedStudent = { name, email, course, amount, feesStatus };
-    await fetch(`${BACKEND_URL}/students/${student.id}`, {
+    await fetch(`/api/students/${student.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedStudent),

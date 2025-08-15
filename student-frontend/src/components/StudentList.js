@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { BACKEND_URL } from '../config';
 import EditStudent from './EditStudent';
 
 function StudentList({ onBack }) {
@@ -11,13 +10,13 @@ function StudentList({ onBack }) {
   }, []);
 
   const fetchStudents = async () => {
-    const res = await fetch(`${BACKEND_URL}/students`);
+    const res = await fetch('/api/students');
     const data = await res.json();
     setStudents(data);
   };
 
   const handleDelete = async (id) => {
-    await fetch(`${BACKEND_URL}/students/${id}`, { method: 'DELETE' });
+    await fetch(`/api/students/${id}`, { method: 'DELETE' });
     fetchStudents();
   };
 

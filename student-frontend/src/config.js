@@ -1,1 +1,1 @@
-export const BACKEND_URL = 'http://<backend_private_ip>:8080';
+export const API_BASE_PATH = '/api';
