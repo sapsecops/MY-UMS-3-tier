@@ -2,7 +2,7 @@ CREATE DATABASE "user-account";
 
 \c "user-account"
 
-CREATE TABLE users (
+CREATE TABLE student (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
