@@ -118,3 +118,39 @@ sudo systemctl reload nginx
 ## Troubleshooting
 - CORS errors: Ensure `CORS_ALLOWED_ORIGINS` on backend includes `http://<FRONTEND_PRIVATE_IP>` or your public domain.
 - 403/404 from API: Verify security groups and that frontend uses backend **private IP**.
+
+
+---
+## Reverse Proxy Setup (Frontend → Backend Private IP)
+
+Instead of exposing backend's private IP to the browser, you can proxy requests via Nginx on the frontend EC2.
+
+**Nginx config example** (`/etc/nginx/sites-available/studentapp`):
+```nginx
+server {
+    listen 80;
+    server_name _;
+
+    root /var/www/html;
+    index index.html;
+
+    location / {
+        try_files $uri /index.html;
+    }
+
+    # Reverse proxy for backend
+    location /api/ {
+        proxy_pass http://<BACKEND_PRIVATE_IP>:8080/api/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+**Changes when using reverse proxy:**
+- Frontend `.env` file does **not** need `VITE_API_BASE_URL` – defaults to `/api`.
+- Backend CORS: only allow `http://<FRONTEND_PUBLIC_IP>` or disable if using same-origin requests.
+- Security Groups: Backend EC2 port 8080 open **only** to frontend EC2's private IP.
